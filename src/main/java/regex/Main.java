@@ -38,8 +38,10 @@ public class Main {
         if (str == null || str.length() < minLength) {
             return false;
         }
+        // at least one lowercase, one uppercase, one digit
         return Pattern.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$", str);
     }
+
 
 
     // Method 2 for checking if a string conforms to a regex: using Matcher.find
@@ -51,14 +53,23 @@ public class Main {
      * @return a list containing the email addresses in the string.
      */
     public static List<String> extractEmails(String str) {
-        final Pattern pattern = Pattern.compile("[a-zA-Z0-9._%+-]+@(mail\\.)?utoronto\\.ca");
-        final Matcher matcher = pattern.matcher(str);
         final List<String> result = new ArrayList<>();
+
+        // Handle null input: return empty list
+        if (str == null) {
+            return result;
+        }
+
+        final Pattern pattern =
+                Pattern.compile("[a-zA-Z0-9._%+-]+@(mail\\.)?utoronto\\.ca");
+        final Matcher matcher = pattern.matcher(str);
+
         while (matcher.find()) {
             result.add(matcher.group());
         }
         return result;
     }
+
 
 
     // Method 3 for checking if a string conforms to a regex: using String.matches
@@ -70,6 +81,12 @@ public class Main {
      * @return whether str contains the same capital letter twice.
      */
     public static boolean checkForDoubles(String str) {
+        // Handle null input: no doubles
+        if (str == null) {
+            return false;
+        }
+        // same capital letter appears at least twice
         return str.matches(".*([A-Z]).*\\1.*");
     }
+
 }
